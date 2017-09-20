@@ -26,24 +26,35 @@ window.addEventListener("load", function() {
     document.getElementById("centerBoxMain").append(renderer.domElement);
 
     // задаём позицию камеры
-    camera.position.x = 10;
-    camera.position.y = 10;
-    camera.position.z = 10;
-    // делаем камеру смотрящей на 0-ую точку осей координат
+    camera.position.x = 20;
+    camera.position.y = 20;
+    camera.position.z = 20;
+
+    // говорим, что камера смотрит в нулевую точку отсчёта
     camera.lookAt(axes.position);
 
     // выводим на экран то, что видит камера
     renderer.render(scene, camera);
 
 
-    // выполняем блок кода циклически
-    let myInterval = setInterval(function(){
-        // увеличиваем положение камеры
-        camera.position.x += 0.3;
-        // делаем камеру смотрящей на 0-ую точку осей координат
-        camera.lookAt(axes.position);
+    // создадим материал зелёного цвета
+    let material_for_lines_first = new THREE.LineBasicMaterial({ color: "#00FF00" });
 
-        // выводим на экран то, что видит камера
-        renderer.render(scene, camera);
-    }, 50);
+    // создаём структуру для хранения точек
+    let container_of_tochki_first = new THREE.Geometry();
+
+    // добавляем точки
+    container_of_tochki_first.vertices.push(new THREE.Vector3(1, 0, 0));
+    container_of_tochki_first.vertices.push(new THREE.Vector3(5, 1, 0));
+    container_of_tochki_first.vertices.push(new THREE.Vector3(1, 2, 0));
+    container_of_tochki_first.vertices.push(new THREE.Vector3(5, 3, 0));
+
+    // создаём ломанную линию из точек
+    let figura_first = new THREE.Line(container_of_tochki_first, material_for_lines_first);
+
+    // добавляем ломанную линию на сцену
+    scene.add(figura_first);
+
+    // выводим на экран то, что видит камера
+    renderer.render(scene, camera);
 });
