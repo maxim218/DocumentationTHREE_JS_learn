@@ -237,6 +237,42 @@ window.addEventListener("load", function() {
         renderer.render(scene, camera);
     }, 50);
 
+
+    let objects = [];
+    objects[0] = plane_1;
+    objects[1] = cube_1;
+
+    let projector = new THREE.Projector();
+    let raycaster = new THREE.Raycaster();
+    let mouse = new THREE.Vector2();
+
+    document.getElementById("centerBoxMain").addEventListener("click",function(event){
+        // выводим на экран то, что видит камера
+        renderer.render(scene, camera);
+
+        // получить позицию мышки относительно центрального бокса
+        const xMouse = event.offsetX;
+        const yMouse = event.offsetY;
+
+        mouse.x = ( xMouse / ww ) * 2 - 1;
+        mouse.y = - ( yMouse / hh ) * 2 + 1;
+
+        raycaster.setFromCamera( mouse, camera );
+
+        let intersects = raycaster.intersectObjects( objects );
+
+        if ( intersects.length > 0 ) {
+                let answer = intersects[0];
+                if(answer.object === objects[0]){
+                    alert("PLANE");
+                }
+
+                if(answer.object === objects[1]){
+                    alert("CUBE");
+                }
+        }
+    });
+
 });
 
 
