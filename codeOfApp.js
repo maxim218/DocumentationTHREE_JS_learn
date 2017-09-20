@@ -37,24 +37,55 @@ window.addEventListener("load", function() {
     renderer.render(scene, camera);
 
 
-    // создадим материал зелёного цвета
-    let material_for_lines_first = new THREE.LineBasicMaterial({ color: "#00FF00" });
 
-    // создаём структуру для хранения точек
-    let container_of_tochki_first = new THREE.Geometry();
 
-    // добавляем точки
-    container_of_tochki_first.vertices.push(new THREE.Vector3(1, 0, 0));
-    container_of_tochki_first.vertices.push(new THREE.Vector3(5, 1, 0));
-    container_of_tochki_first.vertices.push(new THREE.Vector3(1, 2, 0));
-    container_of_tochki_first.vertices.push(new THREE.Vector3(5, 3, 0));
+    // выносим переменные из функции
+    // фигура
+    let figura_first = null;
+    // путь по оси X
+    let wayX = 0;
 
-    // создаём ломанную линию из точек
-    let figura_first = new THREE.Line(container_of_tochki_first, material_for_lines_first);
+    // функция, создающая новую фигуру и вычисляющая её положение
+    function createFigureAndAddItToScene() {
+        // создадим материал зелёного цвета
+        let material_for_lines_first = new THREE.LineBasicMaterial({color: "#00FF00"});
 
-    // добавляем ломанную линию на сцену
-    scene.add(figura_first);
+        // создаём структуру для хранения точек
+        let container_of_tochki_first = new THREE.Geometry();
 
-    // выводим на экран то, что видит камера
-    renderer.render(scene, camera);
+        // добавляем точки в структуру
+        container_of_tochki_first.vertices.push(new THREE.Vector3(1 + wayX, 0, 0));
+        container_of_tochki_first.vertices.push(new THREE.Vector3(5 + wayX, 1, 0));
+        container_of_tochki_first.vertices.push(new THREE.Vector3(1 + wayX, 2, 0));
+        container_of_tochki_first.vertices.push(new THREE.Vector3(5 + wayX, 3, 0));
+
+        // создаём ломанную линию из точек
+        figura_first = new THREE.Line(container_of_tochki_first, material_for_lines_first);
+
+        // добавляем ломанную линию на сцену
+        scene.add(figura_first);
+
+        // увеличиваем путь по оси X
+        wayX += 0.2;
+    }
+
+
+
+    // создаём анимацию
+    let intervalOfMovingFigura = setInterval(function(){
+        // пытаемся удалить старую фигуру
+        try{
+            scene.remove(figura_first);
+        } catch (err) {
+            // some error
+        }
+
+        // после удаления старой фигуры создаём новую
+        createFigureAndAddItToScene();
+
+        // выводим на экран то, что видит камера
+        renderer.render(scene, camera);
+    }, 45);
+
+
 });
