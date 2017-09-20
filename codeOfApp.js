@@ -151,11 +151,17 @@ window.addEventListener("load", function() {
 
     // задаём позицию камеры
     camera.position.x = 0;
-    camera.position.y = 30;
-    camera.position.z = 0;
+    camera.position.y = 15;
+    camera.position.z = 50;
 
-    camera.lookAt(cube_1.position);
+    const p = Math.PI;
 
+
+    ///////////////////////////////////////////////////////////
+    camera.rotation.x = 0;
+    camera.rotation.y = 0;
+    camera.rotation.z = 0;
+    ///////////////////////////////////////////////////////////
 
     //camera.rotation.
 
@@ -217,7 +223,15 @@ window.addEventListener("load", function() {
             camera.position.z += speed;
         }
 
-        camera.lookAt(cube_1.position);
+        const s = 0.008;
+
+        if(LL === true){
+            camera.rotation.y -= s;
+        }
+
+        if(RR === true){
+            camera.rotation.y += s;
+        }
 
         // выводим на экран то, что видит камера
         renderer.render(scene, camera);
