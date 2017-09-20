@@ -154,7 +154,7 @@ window.addEventListener("load", function() {
     camera.position.y = 30;
     camera.position.z = 0;
 
-    camera.roatation = THREE.Vector3(0,0,0);
+    camera.lookAt(cube_1.position);
 
 
     //camera.rotation.
@@ -217,13 +217,7 @@ window.addEventListener("load", function() {
             camera.position.z += speed;
         }
 
-        if(right === LL){
-            camera.rotation.z -= 0.02;
-        }
-
-        if(right === RR) {
-            camera.rotation.z += 0.02;
-        }
+        camera.lookAt(cube_1.position);
 
         // выводим на экран то, что видит камера
         renderer.render(scene, camera);
