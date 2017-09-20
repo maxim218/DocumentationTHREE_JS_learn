@@ -83,12 +83,14 @@ window.addEventListener("load", function() {
     // добавляем куб на сцену
     scene.add(cube_1);
 
-
+    // поворачиваем куб на 90 градусов
+    cube_1.rotation.y = Math.PI / 2;
 
     // цвет света
     let lightColor = "#FFFFFF";
     // интенсивность света
     let intensive = 0.9;
+
 
     // создаём новый свет
     let directionalLight_1 = new THREE.DirectionalLight(lightColor, intensive);
@@ -96,8 +98,20 @@ window.addEventListener("load", function() {
     directionalLight_1.position.x = 0;
     directionalLight_1.position.y = 1;
     directionalLight_1.position.z = 0;
-    directionalLight_1.rotation.y = 60;
     scene.add( directionalLight_1 );
+
+
+    // новый источник света
+
+
+    // создаём источник света и его цвет
+    let spotLight_1 = new THREE.SpotLight("#CCCCCC");
+    // описывае координаты источника света
+    spotLight_1.position.set( 10, 20, 8 );
+    // добавляем на сцену источник света
+    scene.add(spotLight_1);
+    spotLight_1.shadow.mapSize.width = 1024;
+    spotLight_1.shadow.mapSize.height = 1024;
 
 
 
@@ -109,12 +123,42 @@ window.addEventListener("load", function() {
     renderer.render(scene, camera);
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     ///////////////////////////////////////////////////////
 
     // задаём позицию камеры
     camera.position.x = 0;
     camera.position.y = 30;
     camera.position.z = 0;
+
+    camera.roatation = THREE.Vector3(0,0,0);
+
+
+    //camera.rotation.
+
     // выводим на экран то, что видит камера
     renderer.render(scene, camera);
 
@@ -125,6 +169,9 @@ window.addEventListener("load", function() {
     let right = false;
     let left = false;
 
+    let LL = false;
+    let RR = false;
+
     window.onkeydown = function(event) {
         const n = event.keyCode;
         switch(n){
@@ -132,6 +179,9 @@ window.addEventListener("load", function() {
             case 40: back = true; break;
             case 37: left = true; break;
             case 39: right = true; break;
+
+            case 65: LL = true; break;
+            case 68: RR = true; break;
         }
     };
 
@@ -142,6 +192,9 @@ window.addEventListener("load", function() {
             case 40: back = false; break;
             case 37: left = false; break;
             case 39: right = false; break;
+
+            case 65: LL = false; break;
+            case 68: RR = false; break;
         }
     };
 
@@ -162,6 +215,14 @@ window.addEventListener("load", function() {
 
         if(right === true){
             camera.position.z += speed;
+        }
+
+        if(right === LL){
+            camera.rotation.z -= 0.02;
+        }
+
+        if(right === RR) {
+            camera.rotation.z += 0.02;
         }
 
         // выводим на экран то, что видит камера
