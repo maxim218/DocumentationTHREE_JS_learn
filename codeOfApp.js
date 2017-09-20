@@ -159,7 +159,7 @@ window.addEventListener("load", function() {
 
     ///////////////////////////////////////////////////////////
     camera.rotation.x = 0;
-    camera.rotation.y = 0;
+    camera.rotation.y = 45 * p / 180;
     camera.rotation.z = 0;
     ///////////////////////////////////////////////////////////
 
