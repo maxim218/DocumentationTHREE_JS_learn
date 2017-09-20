@@ -18,7 +18,7 @@ window.addEventListener("load", function() {
     renderer.setSize(ww,hh);
 
     // создать вспомогательные осевые линии
-    let axes = new THREE.AxisHelper(30);
+    let axes = new THREE.AxisHelper(200);
     // добавить вспомогательные осевые линии на сцену
     scene.add(axes);
 
@@ -26,9 +26,9 @@ window.addEventListener("load", function() {
     document.getElementById("centerBoxMain").append(renderer.domElement);
 
     // задаём позицию камеры
-    camera.position.x = 20;
-    camera.position.y = 20;
-    camera.position.z = 20;
+    camera.position.x = 100;
+    camera.position.y = 100;
+    camera.position.z = 100;
 
     // говорим, что камера смотрит в нулевую точку отсчёта
     camera.lookAt(axes.position);
@@ -36,56 +36,33 @@ window.addEventListener("load", function() {
     // выводим на экран то, что видит камера
     renderer.render(scene, camera);
 
+    ///////////////////////////////////////////////////////
+
+    // создание сетки
+
+    // размер стороны ВСЕЙ сетки
+    let sizeOfOneKv = 70;
+    // на сколько частей разбита каждая сторона сетки
+    let divisions = 8;
+    // цвет опорных осей сетки
+    let color_1 = "#47ffec";
+    // цвет клеток сетки
+    let color_2 = "#00FF00";
+
+    // создаём сетку
+    let gridHelper_1 = new THREE.GridHelper( sizeOfOneKv, divisions, color_1, color_2);
+    // добавляем сетку на сцену
+    scene.add( gridHelper_1 );
+
+
+    ///////////////////////////////////////////////////////
 
 
 
-    // выносим переменные из функции
-    // фигура
-    let figura_first = null;
-    // путь по оси X
-    let wayX = 0;
-
-    // функция, создающая новую фигуру и вычисляющая её положение
-    function createFigureAndAddItToScene() {
-        // создадим материал зелёного цвета
-        let material_for_lines_first = new THREE.LineBasicMaterial({color: "#00FF00"});
-
-        // создаём структуру для хранения точек
-        let container_of_tochki_first = new THREE.Geometry();
-
-        // добавляем точки в структуру
-        container_of_tochki_first.vertices.push(new THREE.Vector3(1 + wayX, 0, 0));
-        container_of_tochki_first.vertices.push(new THREE.Vector3(5 + wayX, 1, 0));
-        container_of_tochki_first.vertices.push(new THREE.Vector3(1 + wayX, 2, 0));
-        container_of_tochki_first.vertices.push(new THREE.Vector3(5 + wayX, 3, 0));
-
-        // создаём ломанную линию из точек
-        figura_first = new THREE.Line(container_of_tochki_first, material_for_lines_first);
-
-        // добавляем ломанную линию на сцену
-        scene.add(figura_first);
-
-        // увеличиваем путь по оси X
-        wayX += 0.2;
-    }
 
 
 
-    // создаём анимацию
-    let intervalOfMovingFigura = setInterval(function(){
-        // пытаемся удалить старую фигуру
-        try{
-            scene.remove(figura_first);
-        } catch (err) {
-            // some error
-        }
-
-        // после удаления старой фигуры создаём новую
-        createFigureAndAddItToScene();
-
-        // выводим на экран то, что видит камера
-        renderer.render(scene, camera);
-    }, 45);
-
+    // выводим на экран то, что видит камера
+    renderer.render(scene, camera);
 
 });
